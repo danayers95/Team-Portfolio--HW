@@ -28,7 +28,7 @@ async function questions(answers) {
         return inquirer.prompt([
             {
                 type: "input",
-                name: "githubUrl",
+                name: "github",
                 message: "What is your Github URL?",
             },
         ]);
