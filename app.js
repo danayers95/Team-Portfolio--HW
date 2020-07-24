@@ -13,56 +13,53 @@ const render = require("./lib/htmlRenderer");
 
 const teamList = [];
 
-async function questions(answers) {
-    const answer = await promptUser();
+// create questions for inquirer
 
-    if (answer.role === "Intern") {
-        return inquirer.prompt([
-            {
-                type: "input",
-                name: "school",
-                message: "What school do you attend?",
-            },
-        ]);
-    } else if (answer.role === "Engineer") {
-        return inquirer.prompt([
-            {
-                type: "input",
-                name: "github",
-                message: "What is your Github URL?",
-            },
-        ]);
-    } else if (answer.role === "Manager") {
-        return inquirer.prompt([
-            {
-                type: "input",
-                name: "office",
-                message: "What is your office number?"
-            },
-        ]);
-    }
-}
-
-function promptUser () {
+function teamQuestions() {
     return inquirer.prompt([
         {
             type: "input",
             name: "name",
-            message: "What is your name?",
+            message: "Enter team member's name",
+            default: "name",
+        },
+        {
+            type: "number",
+            name: "id",
+            message: "Enter team member's id number",
+            default: "id",
         },
         {
             type: "input",
-            name: "id",
-            message: "What is your ID number?",
+            name: "email",
+            message: "Enter the team member's email address",
+            default: "email",
         },
         {
-            type: "rawlist",
-            name: "role",
-            message: "What is your role?",
-            choices: ["Intern", "Engineer", "Manager"],
+            type: "input",
+            name: "school",
+            message: "Enter education",
+            default: "school name",
+            when: (answers) => answers.employeeType === "Intern",
+        },
+        {
+            type: "number",
+            name: "officeNumber",
+            message: "Enter the manager's office number",
+            default: "office number",
+            when: (answers) => answers.employeeType === "Manager",
+        },
+        {
+            type: "input",
+            name: "github",
+            message: "Enter github username",
+            default: "github username",
+            when: (answers) => answers.employeeType === "Engineer",
         },
     ]);
 }
+
+
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
