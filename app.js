@@ -36,6 +36,12 @@ function teamQuestions() {
             default: "email",
         },
         {
+            type: "rawlist",
+            name: "employeeType",
+            message: "Select the team member's role",
+            choices: ["Intern", "Manager", "Engineer"],
+        },
+        {
             type: "input",
             name: "school",
             message: "Enter education",
@@ -58,6 +64,15 @@ function teamQuestions() {
         },
     ]);
 }
+
+teamQuestions()
+    .then(function (answers) {
+        console.log();
+    })
+    .catch(function (err) {
+        console.log(err);
+    });
+
 
 
 
