@@ -15,8 +15,8 @@ const teamList = [];
 
 // create questions for inquirer
 
-function teamQuestions() {
-    return inquirer.prompt([
+const teamQuestions = async () => {
+    const answers = await inquirer.prompt([
         {
             type: "input",
             name: "name",
@@ -35,19 +35,14 @@ function teamQuestions() {
             message: "Enter the team member's email address",
             default: "email",
         },
+        // create rawlist to ask what type of worker
         {
             type: "rawlist",
             name: "employeeType",
             message: "Select the team member's role",
             choices: ["Intern", "Manager", "Engineer"],
         },
-        {
-            type: "input",
-            name: "school",
-            message: "Enter education",
-            default: "school name",
-            when: (answers) => answers.employeeType === "Intern",
-        },
+        // if manager: 
         {
             type: "number",
             name: "officeNumber",
@@ -55,6 +50,15 @@ function teamQuestions() {
             default: "office number",
             when: (answers) => answers.employeeType === "Manager",
         },
+        // if intern:
+        {
+            type: "input",
+            name: "school",
+            message: "Enter education",
+            default: "school name",
+            when: (answers) => answers.employeeType === "Intern",
+        },
+        // if engineer:
         {
             type: "input",
             name: "github",
@@ -63,7 +67,13 @@ function teamQuestions() {
             when: (answers) => answers.employeeType === "Engineer",
         },
     ]);
-}
+    console.log(answers);
+    teamList = [...teamList, answers];
+    if (answers.continue) {
+        teamQuestions();
+    }
+    console.log(teamList); 
+};
 
 teamQuestions()
     .then(function (answers) {
