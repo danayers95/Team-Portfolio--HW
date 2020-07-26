@@ -3,6 +3,7 @@
 ## Homework Assignment #10 for July 25th.
 
 Link to repository: https://github.com/danglayers/Team-Portfolio--HW
+--- 
 Link to video displaying function of application: https://drive.google.com/drive/folders/1BYdfFKiKIQQqNFU6SnY42UOnwnJzcTN4?usp=sharing
 
 ## Description
@@ -31,4 +32,5 @@ When setting up the javascript files in the lib folder, I had to run tests in my
 
 ## Questions
 email: danglayers@gmail.com
+---
 github: https://github.com/danglayers
