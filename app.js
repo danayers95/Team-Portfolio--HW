@@ -9,80 +9,113 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
+const { inherits } = require("util");
 
-
-const teamList = [];
+let teamList = [];
 
 // create questions for inquirer
 
 const teamQuestions = async () => {
-    const answers = await inquirer.prompt([
-        {
-            type: "input",
-            name: "name",
-            message: "Enter team member's name",
-            default: "name",
-        },
-        {
-            type: "number",
-            name: "id",
-            message: "Enter team member's id number",
-            default: "id",
-        },
-        {
-            type: "input",
-            name: "email",
-            message: "Enter the team member's email address",
-            default: "email",
-        },
-        // create rawlist to ask what type of worker
-        {
-            type: "rawlist",
-            name: "employeeType",
-            message: "Select the team member's role",
-            choices: ["Intern", "Manager", "Engineer"],
-        },
-        // if manager: 
-        {
-            type: "number",
-            name: "officeNumber",
-            message: "Enter the manager's office number",
-            default: "office number",
-            when: (answers) => answers.employeeType === "Manager",
-        },
-        // if intern:
-        {
-            type: "input",
-            name: "school",
-            message: "Enter education",
-            default: "school name",
-            when: (answers) => answers.employeeType === "Intern",
-        },
-        // if engineer:
-        {
-            type: "input",
-            name: "github",
-            message: "Enter github username",
-            default: "github username",
-            when: (answers) => answers.employeeType === "Engineer",
-        },
-    ]);
-    console.log(answers);
-    teamList = [...teamList, answers];
-    if (answers.continue) {
-        teamQuestions();
-    }
-    console.log(teamList); 
-};
+    const teamAnswers = () => {
+        inquirer
+          .prompt([
+            {
+                type: "input",
+                name: "name",
+                message: "Enter team member's name",
+                default: "name",
+            },
+            {
+                type: "number",
+                name: "id",
+                message: "Enter team member's id number",
+                default: "id",
+            },
+            {
+                type: "input",
+                name: "email",
+                message: "Enter the team member's email address",
+                default: "email",
+            },
+            // create rawlist to ask what type of worker
+            {
+                type: "rawlist",
+                name: "employeeType",
+                message: "Select the team member's role",
+                choices: ["Intern", "Manager", "Engineer"],
+            },
+            // if manager: 
+            {
+                type: "number",
+                name: "officeNumber",
+                message: "Enter the manager's office number",
+                default: "office number",
+                when: (answers) => answers.employeeType === "Manager",
+            },
+            // if intern:
+            {
+                type: "input",
+                name: "school",
+                message: "Enter education",
+                default: "school name",
+                when: (answers) => answers.employeeType === "Intern",
+            },
+            // if engineer:
+            {
+                type: "input",
+                name: "github",
+                message: "Enter github username",
+                default: "github username",
+                when: (answers) => answers.employeeType === "Engineer",
+            },
+          ])
+          .then(function (answers) {
+              teamList.push(answers);
+              if (answers.continue) {
+                  teamAnswers();
+              }
+              let team = employeeConstructor(teamList);
+              writeHTML(team);
+          })
 
-teamQuestions()
-    .then(function (answers) {
-        console.log();
-    })
-    .catch(function (err) {
-        console.log(err);
+          .catch(function (err) {
+              console.log(err);
+          });
+    };
+    await teamAnswers();
+}; 
+
+function writeHTML(team) {
+    const html = render(team);
+    fs.writeFileSync(outputPath, html, "utf8", function (err) {
+        if (err) {
+            return console.log(err);
+        }
     });
+}
 
+teamQuestions();
+        
+    
+    
+    
+    
+    
+    
+    // ]);
+    // .then(function (answers) {
+        // teamQuestions.push(answers);
+        // if (answers.continue) {
+            // teamAnswers();
+        // }
+        // let team = teamConstructors(allAnswers);
+        // writeHTML(team);
+    // })
+// 
+    // .catch(function (err) {
+        // console.log(err);
+    // });
+    // await gatherInfo();
 
 
 
