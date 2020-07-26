@@ -5,6 +5,7 @@
 Link to repository: https://github.com/danglayers/Team-Portfolio--HW
 --- 
 Link to video displaying function of application: https://drive.google.com/drive/folders/1BYdfFKiKIQQqNFU6SnY42UOnwnJzcTN4?usp=sharing
+---
 
 ## Description
 An application which generates an HTML page consisting of a team of workers consisting of Interns, Managers, and Engineers. 
@@ -34,3 +35,4 @@ When setting up the javascript files in the lib folder, I had to run tests in my
 email: danglayers@gmail.com
 ---
 github: https://github.com/danglayers
+---
