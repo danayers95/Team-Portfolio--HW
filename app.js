@@ -15,86 +15,122 @@ let teamList = [];
 
 // create questions for inquirer
 
-const teamQuestions = async () => {
-    const teamAnswers = () => {
-        inquirer
-          .prompt([
-            {
-                type: "input",
-                name: "name",
-                message: "Enter team member's name",
-                default: "name",
-            },
-            {
-                type: "number",
-                name: "id",
-                message: "Enter team member's id number",
-                default: "id",
-            },
-            {
-                type: "input",
-                name: "email",
-                message: "Enter the team member's email address",
-                default: "email",
-            },
-            // create rawlist to ask what type of worker
-            {
-                type: "rawlist",
-                name: "employeeType",
-                message: "Select the team member's role",
-                choices: ["Intern", "Manager", "Engineer"],
-            },
-            // if manager: 
-            {
-                type: "number",
-                name: "officeNumber",
-                message: "Enter the manager's office number",
-                default: "office number",
-                when: (answers) => answers.employeeType === "Manager",
-            },
-            // if intern:
-            {
-                type: "input",
-                name: "school",
-                message: "Enter education",
-                default: "school name",
-                when: (answers) => answers.employeeType === "Intern",
-            },
-            // if engineer:
-            {
-                type: "input",
-                name: "github",
-                message: "Enter github username",
-                default: "github username",
-                when: (answers) => answers.employeeType === "Engineer",
-            },
-          ])
-          .then(function (answers) {
-              teamList.push(answers);
-              if (answers.continue) {
-                  teamAnswers();
-              }
-              let team = employeeConstructor(teamList);
-              writeHTML(team);
-          })
-
-          .catch(function (err) {
-              console.log(err);
-          });
-    };
-    await teamAnswers();
-}; 
-
-function writeHTML(team) {
-    const html = render(team);
-    fs.writeFileSync(outputPath, html, "utf8", function (err) {
-        if (err) {
-            return console.log(err);
-        }
-    });
+function teamQuestions() {
+    return inquirer.prompt([
+        {
+            type: "input",
+            name: "name",
+            message: "What is your name?",
+            message: "Enter team member's name",
+            default: "name",
+        },
+        {
+            type: "input",
+            type: "number",
+            name: "id",
+            message: "What is your ID number?",
+            message: "Enter team member's id number",
+            default: "id",
+        },
+        {
+            type: "input",
+            name: "email",
+            message: "Enter the team member's email address",
+            default: "email",
+        },
+        {
+            type: "input",
+            name: "school",
+            message: "Enter education",
+            default: "school name",
+            when: (answers) => answers.employeeType === "Intern",
+        },
+        {
+            type: "rawlist",
+            name: "role",
+            message: "What is your role?",
+            choices: ["Intern", "Engineer", "Manager"],
+            type: "number",
+            name: "officeNumber",
+            message: "Enter the manager's office number",
+            default: "office number",
+            when: (answers) => answers.employeeType === "Manager",
+        },
+        {
+            type: "input",
+            name: "github",
+            message: "Enter github username",
+            default: "github username",
+            when: (answers) => answers.employeeType === "Engineer",
+        },
+    ]);
 }
+    
+        
+        
+        
+        
+        
+        
+        
+        
+        
+          // ]);
+        // .then(function (answers) {
+        //     teamQuestions.push(answers);
+        //     if (answers.continue) {
+        //         teamAnswers();
+        //     }
+        //     let team = teamConstructors(allAnswers);
+        //     writeHTML(team);
+        // })
+    
+        // .catch(function (err) {
+        //     console.log(err);
+        // });
+        // await gatherInfo();
+//           .then(function (answers) {
+//               teamList.push(answers);
+//               if (answers.continue) {
+//                   teamAnswers();
+//               }
+//               let team = employeeConstructor(teamList);
+//               writeHTML(team);
+//           })
 
-teamQuestions();
+//           .catch(function (err) {
+//               console.log(err);
+//           });
+//     };
+//     await teamAnswers();
+// }; 
+
+// const employeeConstructor = (teamList) => {
+    // console.log(teamList);
+    // return teamList.map((answer) => {
+        // if (answer.employeeType === "Intern") {
+            // return new Intern(answer.name, answer.id, answer.email, answer.school);
+        // }
+        // console.log(answer);
+        // if (answer.employeeType === "Manager") {
+            // return new Manager(answer.name, answer.id, answer.email, answer.officeNumber);
+        // }
+        // if (answer.employeeType === "Engineer") {
+            // return new Engineer(answer.name, answer.id, answer.email, answer.github);
+        // }
+    // });
+// };
+
+// function writeHTML(team) {
+//     const html = render(team);
+//     fs.writeFileSync(outputPath, html, "utf8", function (err) {
+//         if (err) {
+//             return console.log(err);
+//         }
+//     });
+// }
+
+// teamQuestions();
         
     
     
@@ -102,20 +138,7 @@ teamQuestions();
     
     
     
-    // ]);
-    // .then(function (answers) {
-        // teamQuestions.push(answers);
-        // if (answers.continue) {
-            // teamAnswers();
-        // }
-        // let team = teamConstructors(allAnswers);
-        // writeHTML(team);
-    // })
-// 
-    // .catch(function (err) {
-        // console.log(err);
-    // });
-    // await gatherInfo();
+    
 
 
 
@@ -140,4 +163,6 @@ teamQuestions();
 // and Intern classes should all extend from a class named Employee; see the directions
 // for further information. Be sure to test out each class and verify it generates an
 // object with the correct structure and methods. This structure will be crucial in order
-// for the provided `render` function to work! ```
+// for the provided `render` function to work! 
+
+
